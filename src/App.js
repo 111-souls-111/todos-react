@@ -1,5 +1,5 @@
-
-
+import todos from "./todos";
+import Todolist from "./Todolist";
 function App() {
   return (
    <div className = 'container'>
@@ -13,7 +13,7 @@ function App() {
       </nav>
 
       <main className='content px-6 py-6'>
-        <h1>Todos</h1>
+        <Todolist list = {todos}/>
         
       </main>
 
