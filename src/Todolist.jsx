@@ -7,18 +7,20 @@ export default function Todolist(props){
                         {props.list.map(item => (
                             <tr key={item.key}>
                                 <td>
-                                    {item.done && <del>item.title</del>}
+                                    {item.done && <del>{item.title}</del>}
                                     {!item.done && item.title}
                                 </td>
                                 <td>
-                                    <button className="button in-succes" 
+                                    <button className="button in-success" 
                                     title="выполнено" 
+                                    onClick = {() => props.setDone(item.key)}
                                     disabled={item.done}>
                                     &#9745;
                                     </button>
                                 </td>
                                 <td>
                                     <button className="button is-danger"
+                                    onClick={() => props.del(item.key)}
                                     title="удалить">
                                     &#9746;
                                     </button>

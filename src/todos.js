@@ -6,9 +6,9 @@ const todos = [
         title: 'Помыть пол',
         desc: 'быстро',
         image: '',
-        done: true,
+        done: false,
         crearedAt: date1.toLocaleString(),
-        key: date1.getTime,
+        key: 2,
     },
     {
         title: 'Помыть посуду',
@@ -16,7 +16,7 @@ const todos = [
         image: '',
         done: false,
         crearedAt: date2.toLocaleString(),
-        key: date2.getTime,
+        key: 1,
     },
 ]
 
