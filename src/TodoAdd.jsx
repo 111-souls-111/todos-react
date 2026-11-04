@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useSubmit } from "react-router-dom";
 
-export default function TodoAdd(props){
-
+export default function TodoAdd(){
+    const submit = useSubmit()
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [image, setImage] = useState('')
@@ -11,7 +12,7 @@ export default function TodoAdd(props){
 
         if (cFiles.length > 0){
             const fileReader = new FileReader()
-            fileReader.onLoad = ( ) => {
+            fileReader.onload = ( ) => {
                 setImage(fileReader.result)
             } 
             fileReader.readAsDataURL(cFiles[0])
@@ -23,12 +24,10 @@ export default function TodoAdd(props){
 
     const handleFormSubmit = evt => {
         evt.preventDefault();
-        const newDeed = {title,desc,image,done:false}
-        const date = new Date();
-        newDeed.createdAt = date.toLocaleString()
-        newDeed.key = date.getTime()
-        props.add(newDeed)
-        evt.target.reset()
+        const finalTitle = title.trim() !== '' ? title.trim() : "без названия"
+        submit({title: finalTitle, desc, image},
+            {action:'/add', method: 'post'}
+        )
     }
 
     const handleFormReset = () => {
@@ -62,8 +61,8 @@ export default function TodoAdd(props){
                         <label className="file-label">
                             <input className="file-input"
                             type = "file"
-                            accept="/image*"
-                            onChange={() => handleImageChange}/>
+                            accept="image/*"
+                            onChange={(evt) => handleImageChange(evt)}/>
                         <span className="file-cta">
                             <span className="file-label">
                                 Граф. иллюстрация

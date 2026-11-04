@@ -1,44 +1,75 @@
 import initialtodos from "./todos";
 import { useState } from "react";
-import Todolist from "./Todolist";
-import TodoAdd from "./TodoAdd";
+import { Outlet, NavLink } from "react-router-dom";
 function App() {
 
 
-  const [todos, setTodos] = useState(initialtodos)
-  
-  const add = deep => {
-    setTodos([...todos,deep])
-  }
-  const setDone = key => {
-    setTodos(todos.map(item =>
-        item.key === key ? { ...item, done: !item.done } : item
-      ))
-  }
+  // const [todos, setTodos] = useState(initialtodos)
+  const [showMenu, setShowMenu] = useState(false)
 
-  const del = key => {
-    const newTodos = todos.filter(item => item.key !== key)
-    setTodos(newTodos)
+  const handleBurgerClick = (evt) => {
+    evt.preventDefault()
+    setShowMenu(!showMenu)
   }
+  
+  // const add = deep => {
+  //   setTodos([...todos,deep])
+  // }
+  // const setDone = key => {
+  //   setTodos(todos.map(item =>
+  //       item.key === key ? { ...item, done: !item.done } : item
+  //     ))
+  // }
+
+  // const del = key => {
+  //   const newTodos = todos.filter(item => item.key !== key)
+  //   setTodos(newTodos)
+  // }
 
   return (
 
-   <div className = 'container'>
-
+  
+<>
       <nav className = "navbar is-light">
         <div className = 'navbar-brand'>
-            <span className='navbar-item is-uppercase'>
+            <NavLink 
+              to='/'
+              className={ ({isActive}) => 
+              'navbar-item is-uppercase' + 
+              (isActive ? ' is-active' : '')}>
               Todos
-            </span>
+              </NavLink>
+              <a href="/"
+                className={showMenu ? 
+                'navbar-burger is-active' :
+                'navbar-burger'}
+                onClick={handleBurgerClick}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
+        </div>
+        <div className={showMenu ? 
+        'navbar-menu is-active': 'navbar-menu'}
+        onClick={handleBurgerClick}>
+          <div className="navbar-start">
+            <NavLink to='/add'
+             className={ ({isActive}) => 
+              'navbar-item' + 
+              (isActive ? ' is-active' : '')}>
+                Создать дело
+              </NavLink>
+          </div>
         </div>
       </nav>
-
+    <div className = 'container'>
       <main className='content px-6 py-6'>
-        <Todolist list = {todos} setDone={setDone} del={del}/>
-        <TodoAdd add = {add}/>
+        <Outlet />
       </main>
 
-   </div>
+    </div>
+  </>
   );
 }
 
