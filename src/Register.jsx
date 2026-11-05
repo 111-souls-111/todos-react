@@ -9,7 +9,7 @@ export default function Register(){
 
     function handleFormSubmit(evt){
         evt.preventDefault()
-        fetcher.submit({email, setEmail},
+        fetcher.submit({email, password},
              {action: '/register', method:'post'})
     }
 

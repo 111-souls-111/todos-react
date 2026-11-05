@@ -1,16 +1,27 @@
 import initialtodos from "./todos";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
+import { setStateChangeHandler } from "./api";
 function App() {
 
 
   // const [todos, setTodos] = useState(initialtodos)
+  const [user, setUser] = useState()
   const [showMenu, setShowMenu] = useState(false)
 
   const handleBurgerClick = (evt) => {
     evt.preventDefault()
     setShowMenu(!showMenu)
   }
+
+  const authStateChanged = __user => {
+    setUser(__user)
+  }
+
+  useEffect(() => {
+    const unsubscribe = setStateChangeHandler(authStateChanged)
+    return () => {unsubscribe()}
+  }, [])
   
   // const add = deep => {
   //   setTodos([...todos,deep])
@@ -37,7 +48,7 @@ function App() {
               className={ ({isActive}) => 
               'navbar-item is-uppercase' + 
               (isActive ? ' is-active' : '')}>
-              Todos
+              {user ? user.email : 'Todos'}
               </NavLink>
               <a href="/"
                 className={showMenu ? 
@@ -54,12 +65,21 @@ function App() {
         'navbar-menu is-active': 'navbar-menu'}
         onClick={handleBurgerClick}>
           <div className="navbar-start">
-            <NavLink to='/add'
+            {user && (<NavLink to='/add'
              className={ ({isActive}) => 
               'navbar-item' + 
               (isActive ? ' is-active' : '')}>
                 Создать дело
               </NavLink>
+              )}
+                {!user && (<NavLink to='/register'
+             className={ ({isActive}) => 
+              'navbar-item' + 
+              (isActive ? ' is-active' : '')}>
+                Зарегистрироваться
+              </NavLink>
+              )}
+            
           </div>
         </div>
       </nav>

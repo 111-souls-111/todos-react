@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
+import {getAuth, createUserWithEmailAndPassword ,onAuthStateChanged} from "firebase/auth"
 import firebaseApp from "./firebase";
 import todos from './todos'
 
@@ -18,6 +18,10 @@ export function getTodo({ params }){
     return todo
 }
 
+export function setStateChangeHandler(func){
+    return onAuthStateChanged(auth, func)
+}
+
 export async function register({request}){
     const fd = await request.formData()
     try{
@@ -28,6 +32,7 @@ export async function register({request}){
         return redirect('/')
     }
     catch (err){
+        console.error("Firebase error details:", err.response?.data?.error?.message || err.message);
         return err.code
     }
 }
