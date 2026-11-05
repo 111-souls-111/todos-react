@@ -1,6 +1,9 @@
 import { redirect } from "react-router-dom";
-
+import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
+import firebaseApp from "./firebase";
 import todos from './todos'
+
+const auth = getAuth(firebaseApp)
 
 export function getTodos(){
     return todos
@@ -13,6 +16,20 @@ export function getTodo({ params }){
         throw new Error()
     }
     return todo
+}
+
+export async function register({request}){
+    const fd = await request.formData()
+    try{
+        const oUC = await createUserWithEmailAndPassword(
+            auth,
+            fd.get('email'), fd.get('password')
+        )
+        return redirect('/')
+    }
+    catch (err){
+        return err.code
+    }
 }
 
 export function actTodo({ params, request }){
