@@ -9,7 +9,7 @@ const firebaseConfig = {
   messagingSenderId: "765110881455",
   appId: "1:765110881455:web:6107caa499d41a24af585a",
   measurementId: "G-79NMFXRMJQ",
-  databaseURL: 'https://console.firebase.google.com/project/todos-c4ebb/database/todos-c4ebb-default-rtdb/data/~2F'
+  databaseURL: 'https://todos-c4ebb-default-rtdb.europe-west1.firebasedatabase.app/'
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
