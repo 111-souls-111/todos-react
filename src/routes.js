@@ -3,10 +3,11 @@ import { createRoutesFromElements, createBrowserRouter, Route, Link } from "reac
 import App from "./App";
 import Todolist from "./Todolist";
 import TodoAdd from "./TodoAdd";
-import { addTodo, getTodos, getTodo, actTodo, register } from "./api";
+import { addTodo, getTodos, getTodo, actTodo, register, login, loguot } from "./api";
 import TodoDetal from "./TodoDetail";
 import Error404 from "./error404";
 import Register from "./Register";
+import Login from "./Login";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -22,6 +23,13 @@ const router = createBrowserRouter(
             <Route path="/register" 
             element={<Register/>} 
             action={register}
+            />
+            <Route path="/login" 
+            element={<Login/>} 
+            action={login}
+            />
+            <Route path="/logout"  
+            loader={loguot}
             />
         </Route>
     )

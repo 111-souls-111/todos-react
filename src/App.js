@@ -43,13 +43,13 @@ function App() {
 <>
       <nav className = "navbar is-light">
         <div className = 'navbar-brand'>
-            <NavLink 
+            {!user? (<p className='navbar-item is-uppercase'>TODOS</p>) : (<NavLink 
               to='/'
               className={ ({isActive}) => 
               'navbar-item is-uppercase' + 
               (isActive ? ' is-active' : '')}>
               {user ? user.email : 'Todos'}
-              </NavLink>
+              </NavLink>)}
               <a href="/"
                 className={showMenu ? 
                 'navbar-burger is-active' :
@@ -77,6 +77,20 @@ function App() {
               'navbar-item' + 
               (isActive ? ' is-active' : '')}>
                 Зарегистрироваться
+              </NavLink>
+              )}
+              {!user && (<NavLink to='/login'
+             className={ ({isActive}) => 
+              'navbar-item' + 
+              (isActive ? ' is-active' : '')}>
+                Войти
+              </NavLink>
+              )}
+              {user && (<NavLink to='/logout'
+             className={ ({isActive}) => 
+              'navbar-item' + 
+              (isActive ? ' is-active' : '')}>
+                выйти
               </NavLink>
               )}
             
